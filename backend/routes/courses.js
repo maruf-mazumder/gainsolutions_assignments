@@ -74,6 +74,18 @@ router.post('/',async (req,res)=>{
  });
     try{
         course = await course.save();
+
+
+        //Add subject to the student
+        console.log("===>",req.body.students);
+        const student = await Student.findById(req.body.students._id);
+        console.log(student);
+        student.subjects[student.subjects.length] = ({name : course.name});
+        console.log(student.subjects);
+        let updatedStudent = await student.save();
+        console.log(updatedStudent);
+
+
         res.json(course);
     }
     catch(ex){
@@ -159,6 +171,19 @@ router.post('/:id',async (req,res)=>{
  
     try{
         course = await course.save();
+
+       //ADD Course To Student
+        console.log("===>",req.body.students);
+        const student = await Student.findById(req.body.students._id);
+        console.log(student);
+        student.subjects[student.subjects.length] = ({name : course.name});
+        console.log(student.subjects);
+        let updatedStudent = await student.save();
+        console.log(updatedStudent);
+
+
+
+
         res.json(course);
     }
     catch(ex){

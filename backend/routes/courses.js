@@ -137,6 +137,25 @@ router.put('/:id/:studentRemove',async (req,res)=>{
     }
     try{
         course = await course.save();
+
+        let student =await Student.findById(req.params.studentRemove);
+        console.log(student.subjects);
+
+        var filtered = student.subjects.filter(function (st) {
+            return st != null;
+          });
+        console.log(filtered);
+        console.log("x=>",course.name);
+        filtered = filtered.filter(function (x) {
+            return x.name != course.name; 
+        });
+
+        console.log(filtered);
+        student.subjects = filtered;
+        console.log("now==>",student.subjects);
+        let updatedStudent = await student.save();
+        console.log(updatedStudent);
+        
         res.json(course);
     }
     catch(ex){
